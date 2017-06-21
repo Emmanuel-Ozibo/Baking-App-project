@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.emma.bakingapp.MainActivity">
+
+    <fragment
+        android:id="@+id/main_frag"
+        class="com.emma.bakingapp.Fragments.RecipesFragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"/>
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/main_frag_container"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_weight="2"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</FrameLayout>-->
+
+</LinearLayout>

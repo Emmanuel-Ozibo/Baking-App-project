@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">"Baking App "</string>
+    <string name="baking_time">Baking Time</string>
+    <string name="welcome_message">Explore better ways to bake those delicious meals </string>
+    <string name="start_baking">Get Started</string>
+    <string name="title_of_ingredents">List Of Ingredients</string>
+    <string name="try_button">To Try</string>
+    <string name="quantity">Quantity: </string>
+    <string name="measurement">Measurement: </string>
+    <string name="see_desc">Show Description</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="steps">Baking Steps</string>
+    <string name="Empty_message">Sorry there are no information to display</string>
+    <string name="desc_displaced"> Descriptions are displayed here </string>
+
+</resources>

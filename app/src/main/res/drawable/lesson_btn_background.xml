@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <!--apply button background transparent, full opacity-->
+            <!--<solid android:color="@color/Red" />-->
+            <gradient android:centerColor="@color/Red"
+                android:endColor="@color/light_red"
+                android:angle="270"
+                android:startColor="@color/colorPrimaryDark"
+                android:gradientRadius="45dp"/>
+            <!--make button border solid color, nontransparent-->
+            <stroke android:color="@color/bright_grey" android:width="2dp"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <!--apply button background transparent, full opacity-->
+            <!--<solid android:color="@color/Red" />-->
+            <gradient android:centerColor="@color/light_red"
+                android:endColor="@color/Red"
+                android:angle="270"
+                android:startColor="@color/colorPrimaryDark"
+                android:gradientRadius="45dp"/>
+            <!--make button border solid color, nontransparent-->
+            <stroke android:color="@color/bright_grey" android:width="2dp"/>
+            <corners android:radius="8dp"/>
+        </shape>
+
+    </item>
+
+</selector>
