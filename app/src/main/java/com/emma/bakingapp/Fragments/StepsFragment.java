@@ -1,7 +1,6 @@
 package com.emma.bakingapp.Fragments;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,29 +12,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.emma.bakingapp.Adapters.StepsCustomAdapter;
+import com.emma.bakingapp.Models.IngeredientsResponse;
+import com.emma.bakingapp.Models.RecipeModels;
 import com.emma.bakingapp.Models.StepsResponse;
 import com.emma.bakingapp.R;
-import com.emma.bakingapp.Utils.ItemDecorator;
+import com.emma.bakingapp.Rest.ApiClient;
+import com.emma.bakingapp.Rest.ApiInterface;
+import com.emma.bakingapp.Utils.ToastMessageUtil;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class StepsFragment extends Fragment{
     private static final String STEPS_PERCEL = "percel";
     private RecyclerView steps_rv;
     private StepsCustomAdapter adapter;
     private StepsCustomAdapter.OnItemClick onItemClick;
+    private List<IngeredientsResponse> ingeredientList;
 
-
-    public static StepsFragment newInstance(ArrayList<StepsResponse> stepsResponseList) {
-
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(STEPS_PERCEL, stepsResponseList);
-        StepsFragment fragment = new StepsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -53,13 +51,34 @@ public class StepsFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //gets the args and set up views
-        final List<StepsResponse> mstepsList = getArguments().getParcelableArrayList(STEPS_PERCEL);
-        adapter = new StepsCustomAdapter(mstepsList, onItemClick);
+        getRetrofitNetWorkAndSetUpViews(view);
+    }
 
-        steps_rv = (RecyclerView)view.findViewById(R.id.steps_rv);
-        steps_rv.setHasFixedSize(true);
-        steps_rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        steps_rv.setAdapter(adapter);
+    private void getRetrofitNetWorkAndSetUpViews(final View view) {
+        ingeredientList = new ArrayList<>();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        final Call<List<RecipeModels>> reponseList = apiService.getRecipeModel();
+        reponseList.enqueue(new Callback<List<RecipeModels>>() {
+
+            @Override
+            public void onResponse(Call<List<RecipeModels>> call, Response<List<RecipeModels>> response) {
+                List<RecipeModels> respondsList = response.body();
+                for (RecipeModels model : respondsList){
+                    List<StepsResponse> ingrList = model.getStepsResponses();
+
+                    adapter = new StepsCustomAdapter(ingrList, onItemClick);
+
+                    steps_rv = (RecyclerView)view.findViewById(R.id.steps_rv);
+                    steps_rv.setHasFixedSize(true);
+                    steps_rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    steps_rv.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<RecipeModels>> call, Throwable t) {
+                ToastMessageUtil.getToastMessage(getContext(), "Error: " + t.toString());
+            }
+        });
     }
 }

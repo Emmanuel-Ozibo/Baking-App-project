@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Red"
-    tools:context="com.emma.bakingapp.MainActivity">
+    tools:context="com.emma.bakingapp.Ui.MainActivity">
 
     <fragment
         android:id="@+id/main_frag"

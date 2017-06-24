@@ -25,7 +25,7 @@ public class StepsCustomAdapter extends RecyclerView.Adapter<StepsCustomAdapter.
 
     //interface to handle the on click events
     public interface OnItemClick{
-        void onClick(int position);
+        void onClick(int position, String video_url, String desc_url);
     }
 
     @Override
@@ -65,7 +65,10 @@ public class StepsCustomAdapter extends RecyclerView.Adapter<StepsCustomAdapter.
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            onItemClick.onClick(position);
+            String video_url = stepsResponseList.get(position).getVideoURL();
+            String desc_url = stepsResponseList.get(position).getDescription();
+
+            onItemClick.onClick(position, video_url, desc_url);
         }
     }
 }

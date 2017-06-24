@@ -40,6 +40,8 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public int getCount() {
+        mCursor = getCursor(context);
+
         if (mCursor == null){
             return 10;
         }

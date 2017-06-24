@@ -1,4 +1,4 @@
-package com.emma.bakingapp;
+package com.emma.bakingapp.Ui;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,12 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.emma.bakingapp.R;
 import com.emma.bakingapp.Utils.CheckNetworkConnection;
 import com.emma.bakingapp.Utils.ToastMessageUtil;
+import com.emma.bakingapp.WidgetBackgroundJobs.DataBroadCastReciever;
 
 public class WelcomeActivity extends AppCompatActivity {
     private Button start_btn;
     private TextView baking_time, message;
+    private static final String BROADCAST_ACTION = "com.emma.bakingapp.getdataforwidget";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +41,36 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (isNetworkIntact){
                     Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent);
+
+                    //also send a custom broadcast to fetch data from the internet
+                    sendToBroadCast();
                 }else {
 
-                    //TODO HANDLE A DIALOG FRAGMENT THAT TAKES CARE OF OPENING THE DATA OR THE WIFI
-                    ToastMessageUtil.getToastMessage(getApplicationContext(), "Ooops");
+                    ToastMessageUtil.getToastMessage(getApplicationContext(), getString(R.string.no_data_message));
                 }
 
             }
         });
+    }
+
+    private void sendToBroadCast() {
+        //create an intent
+        Intent broadcastIntent = new Intent(WelcomeActivity.this, DataBroadCastReciever.class);
+        broadcastIntent.setAction(BROADCAST_ACTION);
+        sendBroadcast(broadcastIntent);
+    }
+
+
+    int no_of_clicks = 0;
+    @Override
+    public void onBackPressed() {
+
+        ToastMessageUtil.getToastMessage(getApplicationContext(), "Press Back again to exit");
+        no_of_clicks++;
+
+        if (no_of_clicks > 1){
+            super.onBackPressed();
+            return;
+        }
     }
 }

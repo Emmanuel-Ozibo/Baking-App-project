@@ -10,7 +10,6 @@ public class ImageLoaderUtil {
     public static void loadImage(Context context, String imageUrl, int res, ImageView imageView){
 
         if (imageUrl.isEmpty()){
-
             imageView.setImageResource(res);
 
         }else {

@@ -3,9 +3,8 @@ package com.emma.bakingapp.UI;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.emma.bakingapp.MainActivity;
 import com.emma.bakingapp.R;
-import com.emma.bakingapp.WelcomeActivity;
+import com.emma.bakingapp.Ui.WelcomeActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,4 +26,5 @@ public class BakingAppUiTest {
     public void checkIfTextMatches(){
         onView(withId(R.id.baking_time)).check(matches(withText("Baking Time")));
     }
+
 }

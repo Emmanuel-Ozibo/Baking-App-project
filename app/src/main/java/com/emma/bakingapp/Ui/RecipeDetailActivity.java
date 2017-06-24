@@ -1,9 +1,6 @@
-package com.emma.bakingapp;
+package com.emma.bakingapp.Ui;
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,15 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.emma.bakingapp.Adapters.CustomListAdapter;
 import com.emma.bakingapp.Models.IngeredientsResponse;
 import com.emma.bakingapp.Models.RecipeModels;
+import com.emma.bakingapp.R;
 import com.emma.bakingapp.Utils.ImageLoaderUtil;
 import com.emma.bakingapp.Utils.ToastMessageUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetailActivity extends AppCompatActivity {

@@ -17,12 +17,12 @@
         <!-- MAIN ACTIVITY -->
         <activity
             android:screenOrientation="portrait"
-            android:name=".MainActivity"
+            android:name=".Ui.MainActivity"
             android:theme="@style/AppTheme" />
 
         <!-- WELCOME ACTIVITY -->
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".Ui.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/WelcomeActivity">
             <intent-filter>
@@ -34,24 +34,25 @@
 
         <!-- RECIPE DETAIL ACTIVITY -->
         <activity
-            android:name=".RecipeDetailActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".Ui.RecipeDetailActivity"
+            android:parentActivityName=".Ui.MainActivity"
             android:theme="@style/NoActionBar" />
 
         <!-- VIDEO TUTORIAL ACTIVITY -->
 
         <activity
-            android:name=".VideoTutorialActivity"
+            android:name=".Ui.VideoTutorialActivity"
             android:label="@string/steps"
-            android:parentActivityName=".RecipeDetailActivity"/>
+            android:parentActivityName=".Ui.RecipeDetailActivity"/>
 
         <!-- VIDEO ACTIVITY FOR SMALL PHONES -->
         <activity
-            android:name=".VideoActivity"
+            android:name=".Ui.VideoActivity"
             android:theme="@style/NoActionBar">
 
         </activity>
 
+        <!--This registeres the widget broadcast reciever-->
         <receiver android:name=".WidgetPackages.NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -62,10 +63,33 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
 
+        <!--This resgisters our service-->
+
         <service android:name=".WidgetPackages.WidgetListViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS">
 
         </service>
+
+        <!--This register our content provider in the android framework-->
+        <provider
+            android:authorities="com.emma.bakingapp"
+            android:name="com.emma.bakingapp.BakingAppDataBase.BakingAppProvider"
+            android:exported="false"/>
+
+        <!--Broadcast to start fetch data for widget-->
+        <receiver android:name=".WidgetBackgroundJobs.DataBroadCastReciever"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.emma.bakingapp.getdataforwidget">
+
+                </action>
+            </intent-filter>
+
+        </receiver>
+
+        <service android:name=".WidgetBackgroundJobs.DataFetchService"
+            android:exported="false"/>
 
     </application>
 

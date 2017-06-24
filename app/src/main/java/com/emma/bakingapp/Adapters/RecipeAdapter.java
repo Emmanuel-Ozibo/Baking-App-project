@@ -4,7 +4,6 @@ package com.emma.bakingapp.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,9 @@ import android.widget.TextView;
 
 import com.emma.bakingapp.Models.RecipeModels;
 import com.emma.bakingapp.R;
-import com.emma.bakingapp.RecipeDetailActivity;
+import com.emma.bakingapp.Ui.RecipeDetailActivity;
 import com.emma.bakingapp.Utils.ImageLoaderUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>{

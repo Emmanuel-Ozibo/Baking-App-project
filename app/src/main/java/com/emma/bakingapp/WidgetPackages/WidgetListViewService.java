@@ -11,8 +11,6 @@ public class WidgetListViewService extends RemoteViewsService{
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
 
-        Log.e("I Got Here: "," yay!!!!!!!!");
-
         return new WidgetRemoteViewFactory(this.getApplicationContext(), intent);
     }
 }

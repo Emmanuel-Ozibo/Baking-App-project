@@ -33,5 +33,6 @@ public class BakingAppDbHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXIST " + BakingAppContract.BakingAppContractFiles.TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }

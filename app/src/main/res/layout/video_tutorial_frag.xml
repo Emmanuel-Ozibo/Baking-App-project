@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/steps_frag_container"
+
+    <fragment
+        class="com.emma.bakingapp.Fragments.StepsFragment"
+        android:id="@+id/step_frag"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </FrameLayout>
+    </fragment>
 
 </FrameLayout>
