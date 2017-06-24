@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.emma.bakingapp.Models.RecipeModels;
 import com.emma.bakingapp.R;
 import com.emma.bakingapp.RecipeDetailActivity;
+import com.emma.bakingapp.Utils.ImageLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +69,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
 
         public void onBindView(final int postion){
-            recipe_img.setImageResource(images[postion]);
+            //this gets the image url
+            final String image_url = recipeModelsList.get(postion).getImage();
+            //This uses picasso image library to load image into view
+            ImageLoaderUtil.loadImage(itemView.getContext(),image_url, images[postion], recipe_img );
+
             recipe_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), RecipeDetailActivity.class);
                     intent.putExtra("recipesModels", recipeModelsList.get(postion));
                     intent.putExtra("imageRes", images[postion]);
+                    intent.putExtra("image_url", image_url);
                     view.getContext().startActivity(intent);
                 }
             });

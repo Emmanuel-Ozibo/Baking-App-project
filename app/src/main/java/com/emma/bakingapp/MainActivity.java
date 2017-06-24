@@ -2,7 +2,10 @@ package com.emma.bakingapp;
 
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.PersistableBundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +18,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.emma.bakingapp.Adapters.RecipeAdapter;
+import com.emma.bakingapp.BakingAppDataBase.BakingAppContract;
+import com.emma.bakingapp.Models.IngeredientsResponse;
 import com.emma.bakingapp.Models.RecipeModels;
 import com.emma.bakingapp.Rest.ApiClient;
 import com.emma.bakingapp.Rest.ApiInterface;
@@ -73,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
                 List<RecipeModels> mde = response.body();
                 setUpRV(mde);
+
+                //put data into the database
+                if (!isInDataBase()){
+                    putDataIntoDataBase(mde);
+                }
             }
 
             @Override
@@ -82,6 +92,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void putDataIntoDataBase(List<RecipeModels> mde) {
+        ContentValues cv = new ContentValues();
+
+        for (RecipeModels responds: mde){
+
+            List<IngeredientsResponse> ingList = responds.getIngredientsResponse();
+
+            for (IngeredientsResponse ingr : ingList){
+
+                String recipeIngr = ingr.getIngredient();
+                cv.put(BakingAppContract.BakingAppContractFiles.INGREDIENT, recipeIngr);
+            }
+        }
+
+        getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv);
+    }
+
+    private boolean isInDataBase() {
+        //get all items in the data base
+        Cursor cursor = getContentResolver().query(BakingAppContract.BakingAppContractFiles.CONTENT_URI,
+                null,
+                null,
+                null,
+                BakingAppContract.BakingAppContractFiles._ID);
+        if (cursor == null){
+            return false;
+        }
+        return true;
+    }
+
 
     private void getDialog(String title, String message) {
 
@@ -107,7 +148,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpRV(List<RecipeModels> models) {
-        int[] images = {R.drawable.nutella, R.drawable.bakedbrownie, R.drawable.yellow_cake, R.drawable.lemonraspberrycheesecakeweb};
+        int[] images = {R.drawable.nutella,
+                R.drawable.bakedbrownie,
+                R.drawable.yellow_cake,
+                R.drawable.lemonraspberrycheesecakeweb};
 
         if (models == null){
             mEmptyTextView.setVisibility(View.VISIBLE);

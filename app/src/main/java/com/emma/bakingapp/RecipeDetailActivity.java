@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.emma.bakingapp.Adapters.CustomListAdapter;
 import com.emma.bakingapp.Models.IngeredientsResponse;
 import com.emma.bakingapp.Models.RecipeModels;
+import com.emma.bakingapp.Utils.ImageLoaderUtil;
 import com.emma.bakingapp.Utils.ToastMessageUtil;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private Button lesson_btn;
     private String title;
     private ImageView recipeImage;
-    Intent i;
+    private Intent i;
+    private String image_url;
 
 
     @Override
@@ -56,8 +58,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         final RecipeModels RecipeModels = i.getParcelableExtra("recipesModels");
         title = RecipeModels.getName();
+        image_url = RecipeModels.getImage();
         responseList = RecipeModels.getIngredientsResponse();
-        recipeImage.setImageResource(i.getExtras().getInt("imageRes"));
+        //uses picasso
+        ImageLoaderUtil.loadImage(this, image_url, i.getExtras().getInt("imageRes"), recipeImage);
+
+
 
         //sets the toolbar dynamically
         setToolBar(toolbar, title);

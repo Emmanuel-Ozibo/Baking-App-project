@@ -14,5 +14,6 @@
     <string name="steps">Baking Steps</string>
     <string name="Empty_message">Sorry there are no information to display</string>
     <string name="desc_displaced"> Descriptions are displayed here </string>
+    <string name="imageContentDesc">Image</string>
 
 </resources>

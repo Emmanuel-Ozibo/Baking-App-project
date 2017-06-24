@@ -24,6 +24,7 @@ import java.util.List;
 
 
 public class VideoTutorialActivity extends AppCompatActivity implements StepsCustomAdapter.OnItemClick{
+
     private FragmentManager fragmentManager;
     private List<StepsResponse> stepsResponseList;
     private boolean isTwoPane;
@@ -69,6 +70,8 @@ public class VideoTutorialActivity extends AppCompatActivity implements StepsCus
 
         //get the video description
         String video_desc = stepsResponseList.get(position).getDescription();
+
+        String video = "android.resource://" + getPackageName() + "/" + R.raw.song;
 
         if (view != null){
             //The phone is a tablet and is should operate in two pane mode

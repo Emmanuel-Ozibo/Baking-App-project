@@ -3,6 +3,7 @@ package com.emma.bakingapp.Fragments;
 import android.media.session.MediaController;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
@@ -13,23 +14,44 @@ import android.widget.VideoView;
 
 import com.emma.bakingapp.R;
 import com.emma.bakingapp.Utils.ToastMessageUtil;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
 
 public class VideoViewFragment extends Fragment {
-    private VideoView mVideoView;
-    private android.widget.MediaController mediaController;
-    private int mInitialDuration;
+
+    private SimpleExoPlayerView simpleExoPlayerView;
+    private SimpleExoPlayer player;
+    private long mInitialDuration;
     private static final String DURATION_KEY = "key";
-    private MediaSessionCompat mediaSessionCompat;
+    private boolean isPlayerReady = true;
+
 
      public static VideoViewFragment newInstance(String videoUrl) {
-
          Bundle args = new Bundle();
          args.putString("videoUrl", videoUrl);
          VideoViewFragment fragment = new VideoViewFragment();
          fragment.setArguments(args);
          return fragment;
-
     }
+
 
     @Nullable
     @Override
@@ -41,46 +63,88 @@ public class VideoViewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        simpleExoPlayerView = (SimpleExoPlayerView)view.findViewById(R.id.ExoPlayer_view);
 
-        mVideoView = (VideoView) view.findViewById(R.id.video_player_view);
-        mVideoView.setVideoURI(Uri.parse(getArguments().getString("videoUrl")));
-        mediaController = new android.widget.MediaController(view.getContext());
-        mVideoView.setMediaController(mediaController);
-        mVideoView.start();
+        if (player == null){
+            //create one
+            player = (SimpleExoPlayer) initExoplayer();
+        }
 
-        //gets the duration if any
+        //get data from save instance state
         if (savedInstanceState != null){
             if (savedInstanceState.containsKey(DURATION_KEY)){
-                int mduration  = savedInstanceState.getInt(DURATION_KEY);
-
-                if (mduration != 0){
-                    ToastMessageUtil.getToastMessage(view.getContext(), mduration+"");
-                    mVideoView.seekTo(mduration);
-                }
-
+                mInitialDuration = savedInstanceState.getLong(DURATION_KEY);
+                player.seekTo(mInitialDuration);
             }
         }
 
+
+        //set the player view to the Exoplayer
+        simpleExoPlayerView.setPlayer(player);
+
+        String videourl = getArguments().toString();
+
+        Uri uri = Uri.parse("http://techslides.com/demos/sample-videos/small.mp4");
+
+        player.setPlayWhenReady(isPlayerReady);
+
+        MediaSource mediaSource = getMediaSource(uri);
+
+        //start the Exo player
+        player.prepare(mediaSource);
+
+    }
+
+    private ExoPlayer initExoplayer(){
+
+       return ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(getContext()),
+                new DefaultTrackSelector(),
+                new DefaultLoadControl());
+    }
+
+    private MediaSource getMediaSource(Uri uri) {
+
+        DefaultExtractorsFactory Def = new DefaultExtractorsFactory();
+        DefaultHttpDataSourceFactory dhdf = new DefaultHttpDataSourceFactory("ua");
+        return new ExtractorMediaSource(uri, dhdf, Def, null, null);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mVideoView.pause();
+        mInitialDuration = player.getCurrentPosition();
+        isPlayerReady = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //when it is resumed also resume the ExopLAYER
+        initExoplayer();
+        isPlayerReady = false;
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mVideoView.stopPlayback();
+        releaseExoPlayer();
     }
+
+    private void releaseExoPlayer() {
+        player.stop();
+        player.release();
+        player = null;
+    }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //persits the current duration of the video player view
-        mInitialDuration = mVideoView.getCurrentPosition();
-        outState.putInt(DURATION_KEY, mInitialDuration);
+        mInitialDuration = player.getCurrentPosition();
+        outState.putLong(DURATION_KEY, mInitialDuration);
     }
 
 }

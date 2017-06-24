@@ -1,34 +1,53 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/transparent_white"
     android:padding="@dimen/widget_margin">
 
-
-    <FrameLayout
+    <ListView
+        android:dividerHeight="1dp"
+        android:divider="@color/Red"
+        tools:listitem="@layout/list_item_widget_view"
+        android:id="@+id/widget_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:scaleType="fitXY"
-            android:src="@drawable/welcome_chess_cake"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    </ListView>
 
-        <ImageView
-            android:src="@color/transparent_red"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <TextView
-            android:id="@+id/baking_time_widget"
-            android:textSize="30sp"
-            android:textColor="@color/White"
-            android:text="@string/baking_time"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!--<RelativeLayout-->
+            <!--android:background="@color/more_transparent_white"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp">-->
 
-    </FrameLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/image1"-->
+                <!--android:contentDescription="image"-->
+                <!--android:src="@drawable/icon"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp" />-->
 
-</RelativeLayout>
+            <!--<TextView-->
+                <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+                <!--android:layout_marginRight="5dp"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:text="Recipe"-->
+                <!--android:textAlignment="center"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_toRightOf="@+id/image1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content" />-->
+
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+</LinearLayout>

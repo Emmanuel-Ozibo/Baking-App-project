@@ -28,6 +28,14 @@
             android:layout_weight="1">
         </FrameLayout>
 
+        <!--<fragment-->
+            <!--android:id="@+id/steps_frag_container"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--class="com.emma.bakingapp.Fragments.StepsFragment"-->
+            <!--android:layout_height="match_parent"/>-->
+
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
