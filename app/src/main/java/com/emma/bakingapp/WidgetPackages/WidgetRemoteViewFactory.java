@@ -24,7 +24,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public void onCreate() {
-
+        mCursor = getCursor(context);
     }
 
 
@@ -43,7 +43,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
         mCursor = getCursor(context);
 
         if (mCursor == null){
-            return 10;
+            return 0;
         }
         return mCursor.getCount();
     }

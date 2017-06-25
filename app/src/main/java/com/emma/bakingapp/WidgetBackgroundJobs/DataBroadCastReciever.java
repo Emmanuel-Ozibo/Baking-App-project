@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.emma.bakingapp.Utils.ToastMessageUtil;
 
 
 public class DataBroadCastReciever extends BroadcastReceiver {
@@ -11,6 +12,8 @@ public class DataBroadCastReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        ToastMessageUtil.getToastMessage(context, "Broadcast recieved");
 
         String action = intent.getAction();
 

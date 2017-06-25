@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.emma.bakingapp.Utils.ToastMessageUtil;
+
 public class BakingAppProvider extends ContentProvider{
     private BakingAppDbHelper bakingOpenDbHelper;
 
@@ -101,6 +103,7 @@ public class BakingAppProvider extends ContentProvider{
                 if (id > 0){
                     //the insertion was successful
                     mUri = ContentUris.withAppendedId(uri, id);
+                    ToastMessageUtil.getToastMessage(getContext(), ""+uri);
                 }else {
                     throw new SQLException("Cant insert in: " + uri);
                 }
@@ -109,6 +112,7 @@ public class BakingAppProvider extends ContentProvider{
                 throw new UnsupportedOperationException("OPERATION IS UNSUPPORTED:");
 
         }
+        ToastMessageUtil.getToastMessage(getContext(), ""+uri);
         return mUri;
     }
 

@@ -63,18 +63,18 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
 
-        <!--This resgisters our service-->
 
+        <!--This resgisters our service-->
         <service android:name=".WidgetPackages.WidgetListViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS">
-
         </service>
+
 
         <!--This register our content provider in the android framework-->
         <provider
             android:authorities="com.emma.bakingapp"
             android:name="com.emma.bakingapp.BakingAppDataBase.BakingAppProvider"
-            android:exported="false"/>
+            android:exported="true"/>
 
         <!--Broadcast to start fetch data for widget-->
         <receiver android:name=".WidgetBackgroundJobs.DataBroadCastReciever"
