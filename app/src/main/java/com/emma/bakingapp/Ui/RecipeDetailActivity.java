@@ -44,9 +44,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         //gets the parcelable arraylist form the intent
         try {
-
             i = getIntent();
-
         }catch (NullPointerException e){
              e.printStackTrace();
             ToastMessageUtil.getToastMessage(getApplicationContext(), e.toString());

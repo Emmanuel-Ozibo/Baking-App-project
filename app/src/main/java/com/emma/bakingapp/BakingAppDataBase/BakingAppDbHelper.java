@@ -24,7 +24,8 @@ public class BakingAppDbHelper extends SQLiteOpenHelper{
         final String CREATE_BAKING_APP_TABLE = "CREATE TABLE " + BakingAppContract.BakingAppContractFiles.TABLE_NAME + "( " +
                 BakingAppContract.BakingAppContractFiles._ID  + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 BakingAppContract.BakingAppContractFiles.TABLE_NAME + " TEXT NOT NULL, " +
-                BakingAppContract.BakingAppContractFiles.INGREDIENT + " TEXT NOT NULL " +
+                BakingAppContract.BakingAppContractFiles.INGREDIENT + " TEXT NOT NULL, " +
+                BakingAppContract.BakingAppContractFiles.RECIPE_NAME + " TEXT NOT NULL " +
                 " );";
 
         sqLiteDatabase.execSQL(CREATE_BAKING_APP_TABLE);

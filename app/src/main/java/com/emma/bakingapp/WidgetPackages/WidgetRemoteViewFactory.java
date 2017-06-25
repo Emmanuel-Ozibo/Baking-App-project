@@ -30,6 +30,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public void onDataSetChanged() {
+        mCursor = getCursor(context);
 
     }
 

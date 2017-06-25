@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -25,11 +26,11 @@ public class DataFetchService extends IntentService{
 
     public DataFetchService() {
         super("this service");
-        Log.e("This is the message: ", "we got here");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        Log.e("This is service: ", "We got here");
 
         //fetch data form the internet and save them into the database for local storage
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
@@ -38,12 +39,11 @@ public class DataFetchService extends IntentService{
         response.enqueue(new Callback<List<RecipeModels>>() {
             @Override
             public void onResponse(Call<List<RecipeModels>> call, Response<List<RecipeModels>> response) {
-                if (!isAlreadyInDatabase()){
+//                if (!isAlreadyInDatabase()){
                     //this prevent it from putting data into the database if data already exists
                     //so by default it only loads data into the database when it is first created
                     loadIntoDataBase(response.body());
-                }
-
+                //}
             }
             @Override
             public void onFailure(Call<List<RecipeModels>> call, Throwable t) {
@@ -58,6 +58,7 @@ public class DataFetchService extends IntentService{
                 null,
                 null, null,
                 BakingAppContract.BakingAppContractFiles._ID);
+
         if (mCursor == null){
             return false;
         }
@@ -73,8 +74,11 @@ public class DataFetchService extends IntentService{
             ContentValues cv1 = new ContentValues();
             cv1.put(BakingAppContract.BakingAppContractFiles.RECIPE_NAME, recipeName);
             //insert the name to the database
-            getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv1);
+            Uri uri1 = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv1);
 
+            if (uri1 != null){
+                ToastMessageUtil.getToastMessage(getApplicationContext(), "Added my real G");
+            }
             //for each of this recipes get the list of ingredients
             List<IngeredientsResponse> ingedients = model.getIngredientsResponse();
 
@@ -84,8 +88,14 @@ public class DataFetchService extends IntentService{
                 //insert data into the content values class
                 ContentValues cv2 = new ContentValues();
                 cv2.put(BakingAppContract.BakingAppContractFiles.INGREDIENT, mIngredient);
+
                 //insert into the data base
-                getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv2);
+                Uri uri = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv2);
+                if (uri != null){
+
+                    ToastMessageUtil.getToastMessage(getApplicationContext(), "Saved successfully");
+
+                }
             }
         }
     }

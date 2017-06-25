@@ -10,7 +10,7 @@
         android:dividerHeight="1dp"
         android:divider="@color/Red"
         tools:listitem="@layout/list_item_widget_view"
-        android:id="@+id/widget_lv"
+        android:id="@+id/my_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

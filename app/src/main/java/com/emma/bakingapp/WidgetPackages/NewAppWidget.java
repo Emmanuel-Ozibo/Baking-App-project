@@ -29,7 +29,7 @@ public class NewAppWidget extends AppWidgetProvider {
         //create the remote view
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
         //set the remote view adapter
-        remoteViews.setRemoteAdapter(R.id.widget_lv, intent);
+        remoteViews.setRemoteAdapter(R.id.my_listview, intent);
 
         //sets the empty list view
         remoteViews.setEmptyView(R.layout.empty_list_view_layout, appWidgetId);
