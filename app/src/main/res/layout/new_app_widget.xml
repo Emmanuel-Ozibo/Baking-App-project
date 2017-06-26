@@ -63,12 +63,7 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
-
-    <View
-        android:background="@color/Red"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
+    
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
