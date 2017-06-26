@@ -71,7 +71,6 @@ public class BakingAppProvider extends ContentProvider{
             default:
                 throw new UnsupportedOperationException("Cant query: " + uri);
 
-
         }
         return mCursor;
     }
@@ -103,7 +102,7 @@ public class BakingAppProvider extends ContentProvider{
                 if (id > 0){
                     //the insertion was successful
                     mUri = ContentUris.withAppendedId(uri, id);
-                    ToastMessageUtil.getToastMessage(getContext(), ""+uri);
+
                 }else {
                     throw new SQLException("Cant insert in: " + uri);
                 }
@@ -112,7 +111,6 @@ public class BakingAppProvider extends ContentProvider{
                 throw new UnsupportedOperationException("OPERATION IS UNSUPPORTED:");
 
         }
-        ToastMessageUtil.getToastMessage(getContext(), ""+uri);
         return mUri;
     }
 

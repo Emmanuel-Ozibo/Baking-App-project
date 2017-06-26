@@ -35,6 +35,9 @@ public class BakingAppContract {
         //recipe ingredient
         public static final String INGREDIENT = "ingredient";
 
+        //recipe steps
+        public static final String RECIPE_STEPS = "steps";
+
     }
 
 }

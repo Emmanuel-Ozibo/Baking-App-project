@@ -15,7 +15,7 @@
     <color name="transparent_red">#46df1414</color>
     <color name="transparent_red_dark">#82df1414</color>
     <color name="gray">#949494</color>
-    <color name="transparent_white">#b6ffffff</color>
-    <color name="more_transparent_white">#c5ffffff</color>
+    <color name="transparent_white">#a7ffffff</color>
+    <color name="more_transparent_white">#caffffff</color>
 
 </resources>

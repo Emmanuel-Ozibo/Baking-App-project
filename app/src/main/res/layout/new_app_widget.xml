@@ -6,48 +6,84 @@
     android:background="@color/transparent_white"
     android:padding="@dimen/widget_margin">
 
-    <ListView
-        android:dividerHeight="1dp"
-        android:divider="@color/Red"
-        tools:listitem="@layout/list_item_widget_view"
-        android:id="@+id/my_listview"
+    <LinearLayout
+        android:background="@color/more_transparent_white"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="70dp">
 
-    </ListView>
+        <ImageView
+            android:src="@drawable/icon"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
 
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+        <TextView
+            android:textColor="@color/Black"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:text="@string/app_name"
+            android:layout_marginLeft="36dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <!--<RelativeLayout-->
-            <!--android:background="@color/more_transparent_white"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp">-->
+    </LinearLayout>
 
-            <!--<ImageView-->
-                <!--android:id="@+id/image1"-->
-                <!--android:contentDescription="image"-->
-                <!--android:src="@drawable/icon"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_marginLeft="20dp"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp" />-->
+    <LinearLayout
+        android:background="@color/more_transparent_white"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
 
-            <!--<TextView-->
-                <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-                <!--android:layout_marginRight="5dp"-->
-                <!--android:layout_marginLeft="5dp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:text="Recipe"-->
-                <!--android:textAlignment="center"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_toRightOf="@+id/image1"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
+        <TextView
+            android:textColor="@color/Black_gray"
+            android:layout_marginLeft="5dp"
+            android:text="Recipe name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
 
-        <!--</RelativeLayout>-->
-    <!--</LinearLayout>-->
+        <TextView
+            android:textColor="@color/Black_gray"
+            android:layout_marginLeft="5dp"
+            android:text="Recipe ingredient"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textColor="@color/Black_gray"
+            android:layout_marginLeft="5dp"
+            android:text="Recipe step"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/Red"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:dividerHeight="1dp"
+            android:divider="@color/Red"
+            tools:listitem="@layout/list_item_widget_view"
+            android:id="@+id/my_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+    </LinearLayout>
 
 </LinearLayout>

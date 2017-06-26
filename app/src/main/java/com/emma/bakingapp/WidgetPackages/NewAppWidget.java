@@ -17,14 +17,10 @@ import com.emma.bakingapp.R;
 
 public class NewAppWidget extends AppWidgetProvider {
 
-
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         Intent intent = new Intent(context, WidgetListViewService.class);
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-
-//        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 
         //create the remote view
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);

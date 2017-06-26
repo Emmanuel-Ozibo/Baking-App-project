@@ -10,6 +10,7 @@ import com.emma.bakingapp.Utils.ToastMessageUtil;
 public class DataBroadCastReciever extends BroadcastReceiver {
     private static final String BOARDCAST_RECIEVED = "com.emma.bakingapp.getdataforwidget";
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 

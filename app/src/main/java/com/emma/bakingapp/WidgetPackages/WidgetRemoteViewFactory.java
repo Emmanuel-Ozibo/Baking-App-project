@@ -4,6 +4,7 @@ package com.emma.bakingapp.WidgetPackages;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory{
     private Context context;
     private Cursor mCursor;
+
 
     public WidgetRemoteViewFactory(Context context, Intent intent){
         this.context = context;
@@ -55,10 +57,15 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
         mCursor = getCursor(context);
 
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.list_item_widget_view);
-
         if (mCursor.moveToPosition(i)){
-            String name = mCursor.getString(mCursor.getColumnIndex(BakingAppContract.BakingAppContractFiles.INGREDIENT));
-            remoteViews.setTextViewText(R.id.widget_step_tv, name);
+            String recipeName = mCursor.getString(mCursor.getColumnIndex(BakingAppContract.BakingAppContractFiles.RECIPE_NAME));
+            String recipeIngredient = mCursor.getString(mCursor.getColumnIndex(BakingAppContract.BakingAppContractFiles.INGREDIENT));
+            String recipeSteps = mCursor.getString(mCursor.getColumnIndex(BakingAppContract.BakingAppContractFiles.RECIPE_STEPS));
+
+            remoteViews.setTextViewText(R.id.widget_recipe_name, recipeName);
+            remoteViews.setTextViewText(R.id.widget_ingredient, recipeIngredient);
+            remoteViews.setTextViewText(R.id.widget_recipe_steps, recipeSteps);
+
         }
 
 
@@ -78,7 +85,7 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
 
     @Override
     public RemoteViews getLoadingView() {
-        return null;
+        return new RemoteViews(context.getPackageName(), R.layout.widget_loading_view);
     }
 
     @Override

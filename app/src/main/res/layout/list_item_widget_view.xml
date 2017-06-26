@@ -6,28 +6,41 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/widget_recipe_name"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/Black_gray"
+            android:layout_marginTop="7dp"
+            android:text="Recipe name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/widget_ingredient"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/Black_gray"
+            android:layout_marginTop="7dp"
+            android:text="Recipe ingredient"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/widget_step_tv"
-                tools:text="Step"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </RelativeLayout>
-
-        <!--<TextView-->
-            <!--android:id="@+id/widget_desc_tv"-->
-            <!--tools:text="Description"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
+                android:id="@+id/widget_recipe_steps"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/Black_gray"
+                android:layout_marginTop="7dp"
+                android:text="Recipe steps"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
 
     </LinearLayout>
 </FrameLayout>

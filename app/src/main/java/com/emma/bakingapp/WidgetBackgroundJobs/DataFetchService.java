@@ -11,6 +11,7 @@ import android.util.Log;
 import com.emma.bakingapp.BakingAppDataBase.BakingAppContract;
 import com.emma.bakingapp.Models.IngeredientsResponse;
 import com.emma.bakingapp.Models.RecipeModels;
+import com.emma.bakingapp.Models.StepsResponse;
 import com.emma.bakingapp.Rest.ApiClient;
 import com.emma.bakingapp.Rest.ApiInterface;
 import com.emma.bakingapp.Utils.ToastMessageUtil;
@@ -39,11 +40,11 @@ public class DataFetchService extends IntentService{
         response.enqueue(new Callback<List<RecipeModels>>() {
             @Override
             public void onResponse(Call<List<RecipeModels>> call, Response<List<RecipeModels>> response) {
-//                if (!isAlreadyInDatabase()){
+                if (!isAlreadyInDatabase()){
                     //this prevent it from putting data into the database if data already exists
                     //so by default it only loads data into the database when it is first created
                     loadIntoDataBase(response.body());
-                //}
+                }
             }
             @Override
             public void onFailure(Call<List<RecipeModels>> call, Throwable t) {
@@ -60,43 +61,62 @@ public class DataFetchService extends IntentService{
                 BakingAppContract.BakingAppContractFiles._ID);
 
         if (mCursor == null){
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void loadIntoDataBase(List<RecipeModels> body) {
+        //local variables
+        StringBuffer ingrBuffer, stepsBuffer;
         //first get each of the item i.e each recipe model
+
+        //string buffer for the ingredient
+        ingrBuffer = new StringBuffer();
+
+        //string buffer for the steps
+        stepsBuffer = new StringBuffer();
+
         for (RecipeModels model : body){
             //get the name
             String recipeName = model.getName();
-            //puts the data in a content value
-            ContentValues cv1 = new ContentValues();
-            cv1.put(BakingAppContract.BakingAppContractFiles.RECIPE_NAME, recipeName);
-            //insert the name to the database
-            Uri uri1 = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv1);
 
-            if (uri1 != null){
-                ToastMessageUtil.getToastMessage(getApplicationContext(), "Added my real G");
-            }
             //for each of this recipes get the list of ingredients
             List<IngeredientsResponse> ingedients = model.getIngredientsResponse();
+
+            //for each recipe get the list of steps
+            List<StepsResponse> stepsResponseList = model.getStepsResponses();
 
             for (IngeredientsResponse ingredient : ingedients){
 
                 String mIngredient = ingredient.getIngredient();
-                //insert data into the content values class
-                ContentValues cv2 = new ContentValues();
-                cv2.put(BakingAppContract.BakingAppContractFiles.INGREDIENT, mIngredient);
 
-                //insert into the data base
-                Uri uri = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cv2);
-                if (uri != null){
+                //append to buffer
+                ingrBuffer.append(mIngredient  + "\n");
 
-                    ToastMessageUtil.getToastMessage(getApplicationContext(), "Saved successfully");
-
-                }
             }
+
+            for (StepsResponse stepsResponse : stepsResponseList){
+
+                //gets the steps response
+                String steps = stepsResponse.getDescription();
+
+                //append to steps buffer
+                stepsBuffer.append(steps + "\n");
+            }
+
+            ContentValues cvS = new ContentValues();
+            cvS.put(BakingAppContract.BakingAppContractFiles.RECIPE_NAME, recipeName);
+            cvS.put(BakingAppContract.BakingAppContractFiles.INGREDIENT, ingrBuffer.toString());
+            cvS.put(BakingAppContract.BakingAppContractFiles.RECIPE_STEPS, stepsBuffer.toString());
+
+            Uri uri = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cvS);
+
+            //insert into the data base
+            if (uri != null){
+                ToastMessageUtil.getToastMessage(getApplicationContext(), "Saved successfully to: " + uri);
+            }
+
         }
     }
 }
