@@ -109,13 +109,6 @@ public class VideoViewFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mInitialDuration = player.getCurrentPosition();
-        isPlayerReady = false;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         //when it is resumed also resume the ExopLAYER
