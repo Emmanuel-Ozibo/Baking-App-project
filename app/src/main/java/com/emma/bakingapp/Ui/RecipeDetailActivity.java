@@ -37,10 +37,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_details);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.recipe_toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.recipe_detail_rv);
         lesson_btn = (Button) findViewById(R.id.try_button);
         recipeImage = (ImageView) findViewById(R.id.recipe_image);
+
+
 
         //gets the parcelable arraylist form the intent
         try {
@@ -49,6 +52,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
              e.printStackTrace();
             ToastMessageUtil.getToastMessage(getApplicationContext(), e.toString());
         }
+
 
         final RecipeModels RecipeModels = i.getParcelableExtra("recipesModels");
         title = RecipeModels.getName();
@@ -74,6 +78,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void setUpListView(List<IngeredientsResponse> responseList) {
 
         CustomListAdapter adapter = new CustomListAdapter(this, R.layout.single_ingre_item, responseList);
@@ -82,6 +88,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
     }
+
+
 
     private void setToolBar(Toolbar toolbar, String title) {
         setSupportActionBar(toolbar);
@@ -94,6 +102,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -104,5 +114,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }

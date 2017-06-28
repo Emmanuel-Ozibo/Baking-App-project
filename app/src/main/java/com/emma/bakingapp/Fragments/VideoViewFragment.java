@@ -42,11 +42,11 @@ public class VideoViewFragment extends Fragment {
     private long mInitialDuration;
     private static final String DURATION_KEY = "key";
     private boolean isPlayerReady = true;
-
+    private static final String VIDEO_URL = "videoUrl";
 
      public static VideoViewFragment newInstance(String videoUrl) {
          Bundle args = new Bundle();
-         args.putString("videoUrl", videoUrl);
+         args.putString(VIDEO_URL, videoUrl);
          VideoViewFragment fragment = new VideoViewFragment();
          fragment.setArguments(args);
          return fragment;
@@ -82,13 +82,11 @@ public class VideoViewFragment extends Fragment {
         //set the player view to the Exoplayer
         simpleExoPlayerView.setPlayer(player);
 
-        String videourl = getArguments().toString();
-
-        Uri uri = Uri.parse("http://techslides.com/demos/sample-videos/small.mp4");
+        Uri mVideoUri = Uri.parse(getArguments().getString(VIDEO_URL));
 
         player.setPlayWhenReady(isPlayerReady);
 
-        MediaSource mediaSource = getMediaSource(uri);
+        MediaSource mediaSource = getMediaSource(mVideoUri);
 
         //start the Exo player
         player.prepare(mediaSource);

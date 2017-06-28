@@ -37,9 +37,7 @@ public class VideoActivity extends AppCompatActivity {
         String video_url = intent.getExtras().getString(VideoTutorialActivity.VIDEO_URL);
         String video_desc = intent.getExtras().getString(VideoTutorialActivity.VIDEO_DESC);
 
-        String video = "android.resource://" + getPackageName() + "/" + R.raw.song;
-
-        VideoViewFragment videoViewFragment = VideoViewFragment.newInstance(video);
+        VideoViewFragment videoViewFragment = VideoViewFragment.newInstance(video_url);
         DescriptionFragment descriptionFragment = DescriptionFragment.newInstance(video_desc);
 
         //displays the fragment

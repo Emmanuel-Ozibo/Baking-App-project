@@ -14,8 +14,6 @@ public class DataBroadCastReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        ToastMessageUtil.getToastMessage(context, "Broadcast recieved");
-
         String action = intent.getAction();
 
         if (action.equals(BOARDCAST_RECIEVED)){

@@ -82,7 +82,6 @@
 
             <intent-filter>
                 <action android:name="com.emma.bakingapp.getdataforwidget">
-
                 </action>
             </intent-filter>
 

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -48,23 +49,26 @@ public class DataFetchService extends IntentService{
             }
             @Override
             public void onFailure(Call<List<RecipeModels>> call, Throwable t) {
-
+                //Handle the error case here
             }
         });
     }
 
-    private boolean isAlreadyInDatabase() {
 
+
+    private boolean isAlreadyInDatabase() {
         Cursor mCursor = getContentResolver().query(BakingAppContract.BakingAppContractFiles.CONTENT_URI,
                 null,
                 null, null,
                 BakingAppContract.BakingAppContractFiles._ID);
 
-        if (mCursor == null){
-            return true;
+        if (mCursor != null){
+            return mCursor.getCount()>0;
         }
         return false;
     }
+
+
 
     private void loadIntoDataBase(List<RecipeModels> body) {
         //local variables
@@ -81,6 +85,14 @@ public class DataFetchService extends IntentService{
             //get the name
             String recipeName = model.getName();
 
+
+            //ensures that our buffer is empty before attempting another transaction
+            if (ingrBuffer.length() > 0 && stepsBuffer.length() > 0){
+                ingrBuffer.delete(0, ingrBuffer.length());
+                stepsBuffer.delete(0, stepsBuffer.length());
+            }
+
+
             //for each of this recipes get the list of ingredients
             List<IngeredientsResponse> ingedients = model.getIngredientsResponse();
 
@@ -92,7 +104,7 @@ public class DataFetchService extends IntentService{
                 String mIngredient = ingredient.getIngredient();
 
                 //append to buffer
-                ingrBuffer.append(mIngredient  + "\n");
+                ingrBuffer.append(mIngredient  + "\n\n");
 
             }
 
@@ -101,8 +113,9 @@ public class DataFetchService extends IntentService{
                 //gets the steps response
                 String steps = stepsResponse.getDescription();
 
+
                 //append to steps buffer
-                stepsBuffer.append(steps + "\n");
+                stepsBuffer.append(steps + "\n\n");
             }
 
             ContentValues cvS = new ContentValues();
@@ -110,13 +123,9 @@ public class DataFetchService extends IntentService{
             cvS.put(BakingAppContract.BakingAppContractFiles.INGREDIENT, ingrBuffer.toString());
             cvS.put(BakingAppContract.BakingAppContractFiles.RECIPE_STEPS, stepsBuffer.toString());
 
-            Uri uri = getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cvS);
-
-            //insert into the data base
-            if (uri != null){
-                ToastMessageUtil.getToastMessage(getApplicationContext(), "Saved successfully to: " + uri);
-            }
+            getContentResolver().insert(BakingAppContract.BakingAppContractFiles.CONTENT_URI, cvS);
 
         }
     }
+
 }

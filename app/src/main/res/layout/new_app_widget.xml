@@ -39,31 +39,31 @@
         android:layout_height="15dp">
 
         <TextView
-            android:textColor="@color/Black_gray"
+            android:textColor="@color/Black"
             android:layout_marginLeft="5dp"
-            android:text="Recipe name"
+            android:text="Name"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
 
         <TextView
-            android:textColor="@color/Black_gray"
+            android:textColor="@color/Black"
             android:layout_marginLeft="5dp"
-            android:text="Recipe ingredient"
+            android:text="Ingredient"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
 
         <TextView
-            android:textColor="@color/Black_gray"
+            android:textColor="@color/Black"
             android:layout_marginLeft="5dp"
-            android:text="Recipe step"
+            android:text="Step"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

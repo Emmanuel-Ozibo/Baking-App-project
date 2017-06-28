@@ -2,6 +2,9 @@ package com.emma.bakingapp.Ui;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.support.annotation.Nullable;
+import android.support.test.espresso.IdlingResource;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,13 +23,22 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity{
     private RecyclerView rv;
     private ArrayList<RecipeModels> models;
     private static final String RECIPES_LIST = "recipe-list";
     private ProgressDialog mprogressbar;
     private TextView mEmptyTextView;
+
+
+    CountingIdlingResource idlingResource = new CountingIdlingResource("DATA_LOADER");
+
+    public CountingIdlingResource getIdlingResource() {
+        return idlingResource;
+    }
 
 
     @Override
@@ -51,14 +63,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        idlingResource.increment();
         getRetrofitNetwork();
+
     }
+
+
 
     private void getRetrofitNetwork() {
         mprogressbar.show();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<RecipeModels>> models = apiService.getRecipeModel();
         models.enqueue(new Callback<List<RecipeModels>>() {
+
             @Override
             public void onResponse(Call<List<RecipeModels>> call, retrofit2.Response<List<RecipeModels>> response) {
                 mprogressbar.cancel();
@@ -76,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void getDialog(String title, String message) {
 
@@ -100,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void setUpRV(List<RecipeModels> models) {
+
         int[] images = {R.drawable.nutella,
                 R.drawable.bakedbrownie,
                 R.drawable.yellow_cake,
@@ -115,11 +136,14 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adp);
 
+        idlingResource.decrement();
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(RECIPES_LIST, models);
     }
+
 }

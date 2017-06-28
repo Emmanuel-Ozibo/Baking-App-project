@@ -35,10 +35,12 @@ public class StepsFragment extends Fragment{
     private List<IngeredientsResponse> ingeredientList;
 
 
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         onItemClick = (StepsCustomAdapter.OnItemClick)context;
+
     }
 
     @Nullable
