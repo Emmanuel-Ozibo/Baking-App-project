@@ -2,6 +2,8 @@ package com.emma.bakingapp.Utils;
 
 import android.content.Context;
 import android.widget.ImageView;
+
+import com.emma.bakingapp.R;
 import com.squareup.picasso.Picasso;
 
 
@@ -20,6 +22,6 @@ public class ImageLoaderUtil {
                     .into(imageView);
         }
 
-
     }
+
 }

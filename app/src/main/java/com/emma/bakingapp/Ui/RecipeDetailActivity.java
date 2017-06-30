@@ -29,7 +29,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String title;
     private ImageView recipeImage;
     private Intent i;
-    private String image_url;
+    private String image_url,Thumbnail_img;
 
 
     @Override
@@ -58,6 +58,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         title = RecipeModels.getName();
         image_url = RecipeModels.getImage();
         responseList = RecipeModels.getIngredientsResponse();
+
         //uses picasso
         ImageLoaderUtil.loadImage(this, image_url, i.getExtras().getInt("imageRes"), recipeImage);
 

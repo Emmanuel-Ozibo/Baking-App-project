@@ -13,16 +13,34 @@ import com.emma.bakingapp.R;
 
 public class DescriptionFragment extends Fragment {
     private static final String DESCRIPTION_KEY = "desc_key";
+    private String videoDescData;
 
-    public static DescriptionFragment newInstance(String description) {
+//    public static DescriptionFragment newInstance(String description) {
+//
+//        Bundle args = new Bundle();
+//        args.putString(DESCRIPTION_KEY, description);
+//
+//        DescriptionFragment fragment = new DescriptionFragment();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
-        Bundle args = new Bundle();
-        args.putString(DESCRIPTION_KEY, description);
 
-        DescriptionFragment fragment = new DescriptionFragment();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
+
+
+    public void setData1(String videoDesc){
+        this.videoDescData = videoDesc;
+    }
+
+    public String getData1(){
+        return videoDescData;
+    }
+
 
     @Nullable
     @Override
@@ -35,8 +53,7 @@ public class DescriptionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView desc_tv = (TextView)view.findViewById(R.id.desc_tv);
         //get the string args
-        String desc = getArguments().getString(DESCRIPTION_KEY);
-        desc_tv.setText(desc);
+        desc_tv.setText(videoDescData);
 
     }
 }

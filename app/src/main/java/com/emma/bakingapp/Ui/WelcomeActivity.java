@@ -18,6 +18,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private TextView baking_time, message;
     private static final String BROADCAST_ACTION = "com.emma.bakingapp.getdataforwidget";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +66,12 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        ToastMessageUtil.getToastMessage(getApplicationContext(), "Press Back again to exit");
         no_of_clicks++;
 
-        if (no_of_clicks > 1){
+        if (no_of_clicks == 1){
+            ToastMessageUtil.getToastMessage(getApplicationContext(), "Press Back again to exit");
+        }
+        else if(no_of_clicks > 1){
             super.onBackPressed();
             return;
         }

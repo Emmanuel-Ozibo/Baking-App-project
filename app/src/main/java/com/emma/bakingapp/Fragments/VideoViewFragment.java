@@ -36,6 +36,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 public class VideoViewFragment extends Fragment {
+    private String vidUrl;
 
     private SimpleExoPlayerView simpleExoPlayerView;
     private SimpleExoPlayer player;
@@ -44,12 +45,21 @@ public class VideoViewFragment extends Fragment {
     private boolean isPlayerReady = true;
     private static final String VIDEO_URL = "videoUrl";
 
-     public static VideoViewFragment newInstance(String videoUrl) {
-         Bundle args = new Bundle();
-         args.putString(VIDEO_URL, videoUrl);
-         VideoViewFragment fragment = new VideoViewFragment();
-         fragment.setArguments(args);
-         return fragment;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+
+    public void setData(String data) {
+        this.vidUrl = data;
+    }
+
+    public String getData() {
+        return vidUrl;
     }
 
 
@@ -68,7 +78,18 @@ public class VideoViewFragment extends Fragment {
         if (player == null){
             //create one
             player = (SimpleExoPlayer) initExoplayer();
+
         }
+
+
+        //set the player view to the Exoplayer
+        simpleExoPlayerView.setPlayer(player);
+
+        Uri mVideoUri = Uri.parse(vidUrl);
+
+        player.setPlayWhenReady(isPlayerReady);
+
+        MediaSource mediaSource = getMediaSource(mVideoUri);
 
         //get data from save instance state
         if (savedInstanceState != null){
@@ -77,16 +98,6 @@ public class VideoViewFragment extends Fragment {
                 player.seekTo(mInitialDuration);
             }
         }
-
-
-        //set the player view to the Exoplayer
-        simpleExoPlayerView.setPlayer(player);
-
-        Uri mVideoUri = Uri.parse(getArguments().getString(VIDEO_URL));
-
-        player.setPlayWhenReady(isPlayerReady);
-
-        MediaSource mediaSource = getMediaSource(mVideoUri);
 
         //start the Exo player
         player.prepare(mediaSource);
@@ -116,6 +127,15 @@ public class VideoViewFragment extends Fragment {
         isPlayerReady = false;
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (player != null){
+            player.release();
+        }
+    }
+
 
     @Override
     public void onStop() {
